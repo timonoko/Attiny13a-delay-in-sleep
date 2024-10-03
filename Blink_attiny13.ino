@@ -10,11 +10,11 @@ const int blue=2;
 ISR(WDT_vect) {}
 
 void nokosleep(int secs){
-  while (secs>9) {
-    wdt_reset();
+  while (secs>8) {
     wdt_enable(WDTO_8S);
-    WDTCR |= (1<<WDTIE) ; 
+    WDTCR |= (1<<WDTIE) ;
     sleep_mode();
+    wdt_disable();
     secs=secs-9;
   }
   delay(secs*1000);
@@ -30,14 +30,14 @@ int main(){
   sei(); // Enable global interrupts  
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);// Use the Power Down sleep mode
   digitalWrite(red, HIGH);
-  nokosleep(1);            
+  delay(100);            
   digitalWrite(red, LOW); 
-  nokosleep(3600);            
+  nokosleep(30);            
   while(true){
     digitalWrite(red, HIGH);
     nokosleep(1);            
     digitalWrite(red, LOW); 
-    nokosleep(1);
+    nokosleep(1);            
   }
 }
 
