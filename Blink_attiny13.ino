@@ -17,10 +17,9 @@ void nokosleep(int secs){
     wdt_disable();
     secs=secs-9;
   }
-  delay(secs*1000);
+  delay(secs*100);
  }
-
-int main(){
+void setup(){
   pinMode(red, OUTPUT);
   pinMode(green, OUTPUT);
   pinMode(blue, OUTPUT);
@@ -29,17 +28,18 @@ int main(){
   DIDR0 = 0x3F; //Disable digital input buffers on all ADC0-ADC5 pins.
   sei(); // Enable global interrupts  
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);// Use the Power Down sleep mode
-  digitalWrite(red, HIGH);
-  delay(100);            
-  digitalWrite(red, LOW); 
-  nokosleep(30);            
-  while(true){
-    digitalWrite(red, HIGH);
+  while (true) { 
+    digitalWrite(green, HIGH);
     nokosleep(1);            
-    digitalWrite(red, LOW); 
-    nokosleep(1);            
+    digitalWrite(green, LOW); 
+    nokosleep(30);            
+    for (int i = 0; i < 5; i++) {
+      digitalWrite(red, HIGH);
+      nokosleep(1);            
+      digitalWrite(red, LOW); 
+      nokosleep(2);            
+    }
   }
 }
-
 
 
