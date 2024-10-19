@@ -3,23 +3,27 @@
 #include <avr/sleep.h>
 #include <avr/wdt.h>
 
-const int green=1;
+const int green=PB3;
+const int red=PB4;
+
+const int vauhti=8;
 
 ISR(WDT_vect) {}
 
 void nokosleep(int secs){
-  while (secs>8) {
+  while (secs>vauhti) {
     wdt_enable(WDTO_8S);
     WDTCR |= (1<<WDIE) ;
     sleep_mode();
     wdt_disable();
-    secs=secs-9;
+    secs=secs-vauhti-1;
   }
-  delay(secs*1000);
+  delay(secs*100);
  }
 
 void setup(){
   pinMode(green, OUTPUT);
+  pinMode(red, OUTPUT);
   // ADCSRA &= ~(1<<ADEN); //Disable ADC
   //ACSR = (1<<ACD); //Disable the analog comparator
   //DIDR0 = 0x3F; //Disable digital input buffers on all ADC0-ADC5 pins.
@@ -29,11 +33,11 @@ void setup(){
     digitalWrite(green, HIGH);
     delay(100);            
     digitalWrite(green, LOW); 
-    nokosleep(10);
+    nokosleep(30);
     for (int i = 0; i < 10; i++) {
-      digitalWrite(green, HIGH);
+      digitalWrite(red, HIGH);
       delay(100);            
-      digitalWrite(green, LOW); 
+      digitalWrite(red, LOW); 
       delay(100);
     }
   }
