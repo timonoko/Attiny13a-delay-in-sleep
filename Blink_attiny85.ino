@@ -18,7 +18,7 @@ void nokosleep(int secs){
     wdt_disable();
     secs=secs-vauhti-1;
   }
-  delay(secs*100);
+  delay(secs*1000);
  }
 
 void setup(){
