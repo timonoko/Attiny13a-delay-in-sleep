@@ -17,7 +17,7 @@ void nokosleep(int secs){
     wdt_disable();
     secs=secs-9;
   }
-  delay(secs*100);
+  delay(secs*1000);
  }
 void setup(){
   pinMode(red, OUTPUT);
