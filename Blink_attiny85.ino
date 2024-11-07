@@ -16,7 +16,7 @@ void nokosleep(int secs){
     WDTCR |= (1<<WDIE) ;
     sleep_mode();
     wdt_disable();
-    secs=secs-vauhti-1;
+    secs=secs-vauhti;
   }
   delay(secs*1000);
  }
